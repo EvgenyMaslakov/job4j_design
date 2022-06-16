@@ -14,11 +14,19 @@ public class ArrayIt implements Iterator<Integer> {
         this.data = data;
     }
 
+    /**
+     * Метод проверяет есть ли следующий элемент
+     * @return
+     */
     @Override
     public boolean hasNext() {
         return point < data.length;
     }
 
+    /**
+     * Метод возвращает первый элемент ячейки, второй вызов возвращает второй и т.д.
+     * @return
+     */
     @Override
     public Integer next() {
         if (!hasNext()) {
