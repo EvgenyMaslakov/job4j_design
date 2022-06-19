@@ -28,12 +28,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        for (int i = index; i < data.length; i++) {
-            if (data[i] % 2 == 0) {
-                return true;
-            }
-        }
-        return false;
+        return findEven(index) >= 0;
     }
 
     /**
@@ -48,7 +43,24 @@ public class EvenNumbersIterator implements Iterator<Integer> {
         while (data[index] % 2 != 0) {
             index++;
         }
+        index = findEven(index);
         return data[index++];
+    }
+
+    /**
+     * Метод ищет индекс следующего четный элемент начиная от заданного индекса
+     * @param start индекс, начиная с которого будет производиться поиск
+     * @return следующий четный элемент. В случае отсутствия возвращает -1
+     */
+    private int findEven(final int start) {
+        int rsl = -1;
+        for (int i = start; i < data.length; i++) {
+            if (data[i] % 2 == 0) {
+                rsl = i;
+                break;
+            }
+        }
+        return rsl;
     }
 
     /**
