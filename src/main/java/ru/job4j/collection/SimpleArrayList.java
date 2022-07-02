@@ -66,17 +66,6 @@ public class SimpleArrayList<T> implements SimpleList<T> {
     }
 
     /**
-     * Метод делает валидацию, что индекс находиться в рамках добавленных элементов
-     * и возвращает значение элемента по индексу
-     * @param index
-     * @return возвращает значение элемента по индексу
-     */
-    private T validation(int index) {
-        Objects.checkIndex(index, size);
-        return container[index];
-    }
-
-    /**
      * set - Заменяет элемент в указанной позиции в этом списке указанным элементом.
      * В методах, где используется индекс нужно делать валидацию.
      * Индекс должен находиться в рамках добавленных элементов.
@@ -89,7 +78,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T set(int index, T newValue) {
-        T rsl = validation(index);
+        T rsl = get(index);
         modCount++;
         container[index] = newValue;
         return rsl;
@@ -108,7 +97,7 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T remove(int index) {
-        T rsl = validation(index);
+        T rsl = get(index);
         modCount++;
         System.arraycopy(
                 container,
@@ -133,7 +122,8 @@ public class SimpleArrayList<T> implements SimpleList<T> {
      */
     @Override
     public T get(int index) {
-        return validation(index);
+        Objects.checkIndex(index, size);
+        return container[index];
     }
 
     /**
