@@ -23,6 +23,39 @@ public class ForwardLinked<T> implements Iterable<T> {
         tail.next = node;
     }
 
+    /**
+     * метод должен переставить элементы в обратном порядке
+     * 1. Сначала мы делаем валидацию. Пустой список или список
+     * из одного элемента не имеет смысла переворачивать,
+     * поэтому возвращаем false
+     *
+     * 2. Далее уже начинаем менять ссылки.
+     * Суть алгоритма заключается в установлении текущему
+     * ссылки на следующий в качестве предыдущего. Далее мы
+     * просто обновляем значения текущего и предыдущего.
+     * Наконец, предыдущий ставится головой списка
+     * @return возвращает true, если удалось переставить элементы в обратном порядке
+     */
+    public boolean revert() {
+        boolean rsl;
+        if (head == null || head.next == null) {
+            rsl = false;
+        } else {
+        Node<T> prev = null;
+        Node<T> current = head;
+        Node<T> next = head.next;
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        head = prev;
+        rsl = true;
+        }
+        return rsl;
+    }
+
     public void addFirst(T value) {
         head = new Node<T>(value, head);
     }
