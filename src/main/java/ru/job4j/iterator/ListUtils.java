@@ -36,8 +36,7 @@ public class ListUtils {
      */
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator(index);
-        iterator.next();
+        ListIterator<T> iterator = list.listIterator(index + 1);
         iterator.add(value);
     }
 
@@ -89,14 +88,8 @@ public class ListUtils {
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
         ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            T l = iterator.next();
-            for (int i = 0; i < elements.size(); i++) {
-                if (l.equals(elements.get(i))) {
-                    iterator.remove();
-                    break;
-                }
-            }
+        for (T element : elements) {
+            removeIf(list, x -> x.equals(element));
         }
     }
 
