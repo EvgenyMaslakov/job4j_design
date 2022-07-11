@@ -3,7 +3,12 @@ package ru.job4j.set;
 import ru.job4j.collection.SimpleArrayList;
 
 import java.util.Iterator;
+import java.util.Objects;
 
+/**
+ * 1. Реализовать коллекцию Set на массиве [#996 #321143]
+ * @param <T>
+ */
 public class SimpleSet<T> implements Set<T> {
 
     /**
@@ -33,7 +38,7 @@ public class SimpleSet<T> implements Set<T> {
     public boolean contains(T value) {
         boolean rsl = false;
         for (T el : set) {
-            if (value == null || value.equals(el)) {
+            if (value == null || Objects.equals(value, el)) {
                 rsl = true;
             }
         }
