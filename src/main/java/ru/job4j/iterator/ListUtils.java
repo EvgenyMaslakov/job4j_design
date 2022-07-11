@@ -87,7 +87,6 @@ public class ListUtils {
      * @param <T> любой тип
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        ListIterator<T> iterator = list.listIterator();
         for (T element : elements) {
             removeIf(list, x -> x.equals(element));
         }
