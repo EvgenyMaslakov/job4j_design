@@ -22,14 +22,8 @@ public class ListUtils {
      */
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.nextIndex() == index) {
-                iterator.add(value);
-                break;
-            }
-            iterator.next();
-        }
+        ListIterator<T> iterator = list.listIterator(index);
+        iterator.add(value);
     }
 
     /**
@@ -42,16 +36,9 @@ public class ListUtils {
      */
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.nextIndex() == index) {
-                iterator.next();
-                iterator.add(value);
-                iterator.previous();
-                break;
-            }
-            iterator.next();
-        }
+        ListIterator<T> iterator = list.listIterator(index);
+        iterator.next();
+        iterator.add(value);
     }
 
     /**
@@ -101,25 +88,15 @@ public class ListUtils {
      * @param <T> любой тип
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        HashSet<T> rsl = new HashSet<>(elements);
-        List<T> rsl2 = new ArrayList<T>(rsl);
-        ListIterator<T> listIterator = list.listIterator();
-        ListIterator<T> elementsIterator = rsl2.listIterator();
-        int counter = 0;
-        while (listIterator.hasNext()) {
-            T l = listIterator.next();
-            while (elementsIterator.hasNext()) {
-                T e = elementsIterator.next();
-                counter++;
-                if (l == e) {
-                    listIterator.remove();
+        ListIterator<T> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            T l = iterator.next();
+            for (int i = 0; i < elements.size(); i++) {
+                if (l.equals(elements.get(i))) {
+                    iterator.remove();
+                    break;
                 }
             }
-            for (int i = counter; i > 0; i--) {
-                counter--;
-                elementsIterator.previous();
-            }
-
         }
     }
 
