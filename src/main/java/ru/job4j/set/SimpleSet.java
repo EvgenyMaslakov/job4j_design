@@ -38,7 +38,7 @@ public class SimpleSet<T> implements Set<T> {
     public boolean contains(T value) {
         boolean rsl = false;
         for (T el : set) {
-            if (value == null || Objects.equals(value, el)) {
+            if (Objects.equals(value, el)) {
                 rsl = true;
             }
         }
