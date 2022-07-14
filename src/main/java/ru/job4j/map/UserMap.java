@@ -15,7 +15,7 @@ public class UserMap {
         calendar.set(1991, 10, 13);
         User user1 = new User("Evgeny", 1, calendar);
         User user2 = new User("Evgeny", 1, calendar);
-        Map<User, Object> map = new HashMap<>() ;
+        Map<User, Object> map = new HashMap<>();
         map.put(user1, new Object());
         map.put(user2, new Object());
         for (Map.Entry<User, Object> pair : map.entrySet()) {
