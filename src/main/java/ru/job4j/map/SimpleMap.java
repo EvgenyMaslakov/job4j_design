@@ -58,7 +58,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int hash(int hashCode) {
-        return hashCode == 0 ? 0 : (hashCode()) ^ (hashCode >>> 2);
+        return hashCode == 0 ? 0 : (hashCode()) ^ (hashCode >>> 16);
     }
 
     /**
@@ -112,14 +112,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
         int index = key == null ? 0 : indexFor(key.hashCode());
         if (table[index] != null && table[index].key.equals(key)) {
             rsl = true;
-            table[index] = null;;
+            table[index] = null;
             count--;
             modCount++;
         }
         return rsl;
     }
 
-    public int size () {
+    public int size() {
         return count;
     }
 
