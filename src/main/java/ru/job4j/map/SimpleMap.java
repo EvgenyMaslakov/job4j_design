@@ -57,12 +57,21 @@ public class SimpleMap<K, V> implements Map<K, V> {
         return rsl;
     }
 
+    /**
+     * Получает хэш от хаш-кода ключа
+     * >>> - беззнаковый побитовый сдвиг вправо
+     * ^ - бинарное логическое ИЛИ
+     * @param hashCode хэш-код
+     * @return возвращает хэш
+     */
     private int hash(int hashCode) {
-        return hashCode == 0 ? 0 : (hashCode()) ^ (hashCode >>> 16);
+        hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
+        return hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
     }
 
     /**
      * индекс объекта MapEntry<K, V> в таблице table
+     * бинарное сложение хэш-кода и размер хэш-таблицы минус 1
      * @param hash хэш-код
      * @return индекс
      */
@@ -92,12 +101,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
      */
     @Override
     public V get(K key) {
-        V rsl = null;
-        int index = key == null ? 0 : indexFor(key.hashCode());
-        if (table[index] != null && table[index].key.equals(key)) {
-            rsl = table[index].value;
+        V value = null;
+        int index = key == null ? 0 : indexFor(hash(key.hashCode()));
+
+        if (table[index] != null && Objects.equals(table[index].key, key)) {
+            value = table[index].value;
         }
-        return rsl;
+        return value;
     }
 
     /**
@@ -109,8 +119,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        int index = key == null ? 0 : indexFor(key.hashCode());
-        if (table[index] != null && table[index].key.equals(key)) {
+        int index = key == null ? 0 : indexFor(hash(key.hashCode()));
+        if (table[index] != null && Objects.equals(table[index].key, key)) {
             rsl = true;
             table[index] = null;
             count--;
