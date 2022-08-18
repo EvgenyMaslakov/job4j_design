@@ -65,8 +65,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
      * @return возвращает хэш
      */
     private int hash(int hashCode) {
-        hashCode ^= (hashCode >>> 20) ^ (hashCode >>> 12);
-        return hashCode ^ (hashCode >>> 7) ^ (hashCode >>> 4);
+        return hashCode == 0 ? 0 : hashCode^(hashCode >>> 16);
     }
 
     /**
