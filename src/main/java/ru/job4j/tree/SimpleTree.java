@@ -1,9 +1,11 @@
 package ru.job4j.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * 1. Создать элементарную структуру дерева [#1711]
+ * 2. Добавить метод boolean isBinary() [#1712]
  * @param <E>
  */
 public class SimpleTree<E> implements Tree<E> {
@@ -36,18 +38,41 @@ public class SimpleTree<E> implements Tree<E> {
     }
 
     /**
-     * Метод ищет по значению
+     * Метод ищет оптионал по значению
+     * В оптионале может быть либо Node<E>, либо null
      * @param value
      * @return
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
+        return findByPredicate(s -> s.value.equals(value));
+    }
+
+    /**
+     * Метод должен проверять количество дочерних элементов в дереве.
+     * Если их > 2 - то дерево не бинарное
+     * Метод должен циклически пройти по всем элементам дерева, аналогично методу findBy().
+     * @return
+     */
+    @Override
+    public boolean isBinary() {
+        return findByPredicate(s -> s.children.size() > 2).isEmpty();
+    }
+
+    /**
+     * Predicate (BiPredicate) - проверяет соблюдение некоторого условия.
+     * Если оно соблюдается, то возвращается значение true.
+     * В качестве параметра лямбда-выражение принимает объект типа T;
+     * @param condition
+     * @return
+     */
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
         Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.value.equals(value)) {
+            if (condition.test(el)) {
                 rsl = Optional.of(el);
                 break;
             }
