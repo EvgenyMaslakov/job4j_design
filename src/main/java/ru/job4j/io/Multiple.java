@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class Multiple {
     public static void main(String[] args) {
@@ -13,7 +14,8 @@ public class Multiple {
                 }
                 out.write(System.lineSeparator().getBytes());
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            System.out.println("Ошибка при вводе данных в файл!");
             e.printStackTrace();
         }
     }
