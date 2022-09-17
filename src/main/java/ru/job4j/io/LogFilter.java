@@ -29,8 +29,6 @@ public class LogFilter {
             e.printStackTrace();
         }
 
-
-
         return rsl;
     }
 
