@@ -30,6 +30,11 @@ public class LogFilter {
         return rsl;
     }
 
+    /**
+     * Метод должен записывать результат фильтрации в файл
+     * @param log отфильтрованный список строк
+     * @param file файл, в который записываем результат фильтрации
+     */
     public static void save(List<String> log, String file) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
