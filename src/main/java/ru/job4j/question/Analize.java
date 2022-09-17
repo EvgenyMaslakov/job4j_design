@@ -14,37 +14,29 @@ public class Analize {
      * @param previous начальное множество
      * @param current измененное множество
      * Логика:
-     * Сравниваем каждый элемент старого списка с каждым элементом нового списка
-     * Если индексы равны, а имена нет, увеличиваем счетчик измененных элементов changed
-     * Если два объекта равны, увеличиваем счетчик дублируемых элементов repeat
-     * Количество добавленных элементов это размер нового списка
-     * минус дублированные и измененные элементы
-     * Количество удаленных элементов это размер старого списка
-     * минус дублированные и измененные элементы
-     * @return возвращает объект Info
+     * Добавляем все элементы в один список HeshSet,
+     * из этого списка удалились все дубликаты
+     * Добавляем все ID общего списка без дубликатов в список HeshSet,
+     * из этого списка удалились все измененные элементы
+     * Зная размеры начальных списков, общего списка без дубликатов,
+     * списка без дубликатов и измененных элементов, вычисляем
+     * количество добавленных, измененных и удаленных элементов
      */
     public static Info diff(Set<User> previous, Set<User> current) {
-        int added = 0;
-        int changed = 0;
-        int deleted = 0;
-        int repeat = 0;
-        Set<User> oldElems = new HashSet<>(previous);
-        Set<User> newElems = new HashSet<>(current);
-        for (User oldEl : oldElems) {
-            for (User newEl : newElems) {
-                if (newEl.getId() == oldEl.getId()
-                        && !newEl.getName().equals(oldEl.getName())) {
-                    changed++;
-                }
-                if (oldEl.equals(newEl)) {
-                    repeat++;
-                }
-            }
+        int previousSize = previous.size();
+        int currentSize = current.size();
+        Set<User> allElems = new HashSet<>(previous);
+        allElems.addAll(current);
+        int allEl = allElems.size();
+        Set<Integer> ids = new HashSet<>();
+        for (User el : allElems) {
+            ids.add(el.getId());
         }
-
-        added = current.size() - changed - repeat;
-        deleted = previous.size() - changed - repeat;
-
+        int allId = ids.size();
+        int changed = allEl - allId;
+        int repeat = previousSize + currentSize - allEl;
+        int added = currentSize - changed - repeat;
+        int deleted = previousSize - changed - repeat;
         return new Info(added, changed, deleted);
     }
 
