@@ -56,6 +56,5 @@ public class LogFilter {
             System.out.println(l);
         }
         save(log, "404.txt");
-
     }
 }
