@@ -35,13 +35,13 @@ public class Config {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             for (String line = read.readLine(); line != null; line = read.readLine()) {
                 if (!line.isBlank() && !line.startsWith("#")) {
-                    String[] keyEndValue = line.split("=", 2);
-                    if (keyEndValue.length != 2
-                            || keyEndValue[0].isEmpty()
-                            || keyEndValue[1].isEmpty()) {
+                    String[] keyAndValue = line.split("=", 2);
+                    if (keyAndValue.length != 2
+                            || keyAndValue[0].isEmpty()
+                            || keyAndValue[1].isEmpty()) {
                         throw new IllegalArgumentException("Нарушение шаблона в строке: " + line);
                     }
-                    values.put(keyEndValue[0], keyEndValue[1]);
+                    values.put(keyAndValue[0], keyAndValue[1]);
                 }
             }
         } catch (IOException e) {
