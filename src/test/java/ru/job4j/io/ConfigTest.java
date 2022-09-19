@@ -32,13 +32,14 @@ class ConfigTest {
     void whenPairWithComment() {
         String path = "./data/pair_with_comment.properties";
         Config config = new Config(path);
+        String key = "1";
         NoSuchElementException exception = assertThrows(
                 NoSuchElementException.class,
                 () -> {
-                    config.value("1");
+                    config.value(key);
                 });
         config.load();
-        assertThat(exception.getMessage()).isEqualTo("Ключ отсутствует");
+        assertThat(exception.getMessage()).isEqualTo("Отсутствует ключ " + key);
         assertThat(config.value("2")).isEqualTo("B=B");
         assertThat(config.value("3")).isEqualTo("C=");
     }
@@ -50,13 +51,14 @@ class ConfigTest {
     void whenTheStringIsEmpty() {
         String path = "./data/when_the_string_is_empty.properties";
         Config config = new Config(path);
+        String key = "5";
         NoSuchElementException exception = assertThrows(
                 NoSuchElementException.class,
                 () -> {
-                    config.value("5");
+                    config.value(key);
                 });
         config.load();
-        assertThat(exception.getMessage()).isEqualTo("Ключ отсутствует");
+        assertThat(exception.getMessage()).isEqualTo("Отсутствует ключ " + key);
         assertThat(config.value("2")).isEqualTo("B=B");
         assertThat(config.value("3")).isEqualTo("C=");
     }
@@ -72,18 +74,4 @@ class ConfigTest {
         assertThatThrownBy(config::load)
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    /**
-     * чтение файла с шаблоном ключ=
-     * в этом случае нужно ожидать исключение IllegalArgumentException
-     */
-
-    /**
-     * чтение файла с шаблоном строка без символа "=" ключзначение
-     * в этом случае нужно ожидать исключение IllegalArgumentException
-     */
-
-    /**
-     * Когда пара без комментариев
-     */
 }

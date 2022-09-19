@@ -24,16 +24,22 @@ public class Config {
      * Метод load() - должен считать все ключи в карту values.
      * Важно в файле могут быть пустые строки и комментарии их нужно пропускать.
      * Для считывания файлов нужно использовать
+     * isBlank - возвращает true только если в строке есть только пробел(-ы)
+     * (и нет других символов) или строка пустая ("") или имеет значение null.
+     * Метод startsWith() в Java имеет два варианта и проверяет начинается ли строка
+     * с указанного префикса, начиная с указанного индекса или с начала (по умолчанию).
      * import java.io.BufferedReader;
      * import java.io.FileReader;
      */
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(this.path))) {
             for (String line = read.readLine(); line != null; line = read.readLine()) {
-                if (line != null && line.length() != 0 && !"#".contains(line)) {
+                if (!line.isBlank() && !line.startsWith("#")) {
                     String[] keyEndValue = line.split("=", 2);
-                    if (keyEndValue[0].isEmpty() || keyEndValue[1].isEmpty()) {
-                        throw new IllegalArgumentException("Нарушение шаблона");
+                    if (keyEndValue.length != 2
+                            || keyEndValue[0].isEmpty()
+                            || keyEndValue[1].isEmpty()) {
+                        throw new IllegalArgumentException("Нарушение шаблона в строке: " + line);
                     }
                     values.put(keyEndValue[0], keyEndValue[1]);
                 }
@@ -51,7 +57,7 @@ public class Config {
      */
     public String value(String key) {
         if (!values.containsKey(key)) {
-            throw new NoSuchElementException("Ключ отсутствует");
+            throw new NoSuchElementException("Отсутствует ключ " + key);
         }
          return this.values.get(key);
     }
