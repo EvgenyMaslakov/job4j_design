@@ -42,13 +42,15 @@ public class LogFilter {
      * @param log отфильтрованный список строк
      * @param file файл, в который записываем результат фильтрации
      */
-    public static void save(List<String> log, String file) {
+    public void saveTo(String file) {
         try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(file)
                 ))) {
-            for (String s : log) {
-                out.println(s);
+            var data = filter();
+            for (String str : data) {
+                out.println(str);
+
             }
         } catch (IOException e) {
             System.out.println("Ошибка при вводе данных в файл!");
@@ -57,11 +59,6 @@ public class LogFilter {
     }
 
     public static void main(String[] args) {
-        LogFilter logFilter = new LogFilter("data/log.txt");
-        List<String> log = logFilter.filter();
-        for (String l : log) {
-            System.out.println(l);
-        }
-        save(log, "data/404.txt");
+        new LogFilter("data/log.txt").saveTo("data/404.txt");
     }
 }
