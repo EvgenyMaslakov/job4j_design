@@ -8,12 +8,19 @@ import java.util.List;
  * 0.4. BufferedOutputStream [#252490]
  */
 public class LogFilter {
+
+    private final String file;
+
+    public LogFilter(String file) {
+        this.file = file;
+    }
+
     /**
      * Метод filter должен прочитать файл и вернуть строки, где предпоследнее значение - это 404.
      * @param file исходный файл
      * @return возвращает строки, где предпоследнее значение - это 404
      */
-    public List<String> filter(String file) {
+    public List<String> filter() {
         List<String> rsl = new ArrayList<>();
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
@@ -50,11 +57,11 @@ public class LogFilter {
     }
 
     public static void main(String[] args) {
-        LogFilter logFilter = new LogFilter();
-        List<String> log = logFilter.filter("log.txt");
+        LogFilter logFilter = new LogFilter("data/log.txt");
+        List<String> log = logFilter.filter();
         for (String l : log) {
             System.out.println(l);
         }
-        save(log, "404.txt");
+        save(log, "data/404.txt");
     }
 }
