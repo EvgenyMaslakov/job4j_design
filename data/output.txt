@@ -1,0 +1,8 @@
+login=login
+password=password
+url=url
+Новые данные
+login=login
+password=password
+url=url
+Новые данные
