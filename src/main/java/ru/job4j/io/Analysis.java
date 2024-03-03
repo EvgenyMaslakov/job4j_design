@@ -5,7 +5,7 @@ import java.io.*;
 /**
  * 2. Анализ доступности сервера. [#859]
  */
-public class Analizy {
+public class Analysis {
     /**
      * Метод unavailable() должен находить диапазоны, когда сервер не работал
      * Сервер не работал, если status = 400 или 500.
@@ -20,15 +20,15 @@ public class Analizy {
         try (BufferedReader read = new BufferedReader(new FileReader(source));
              PrintWriter out = new PrintWriter(
                      new BufferedOutputStream(new FileOutputStream(target)))) {
-            Boolean errorServer = true;
+            Boolean changeStatus = true;
             for (String line = read.readLine(); line != null; line = read.readLine()) {
-                    if (errorServer && (line.startsWith("400") || line.startsWith("500"))) {
+                    if (changeStatus && (line.startsWith("400") || line.startsWith("500"))) {
                         out.print(line.split(" ")[1] + ";");
-                        errorServer = false;
+                        changeStatus = false;
                     }
-                    if (!errorServer && (line.startsWith("200") || line.startsWith("300"))) {
+                    if (!changeStatus && (line.startsWith("200") || line.startsWith("300"))) {
                         out.print(line.split(" ")[1] + ";" + System.lineSeparator());
-                        errorServer = true;
+                        changeStatus = true;
                     }
                 }
         } catch (IOException e) {
@@ -38,9 +38,9 @@ public class Analizy {
     }
 
     public static void main(String[] args) {
-        Analizy test1 = new Analizy();
-        test1.unavailable("source1.csv", "target1.cvs");
-        Analizy test2 = new Analizy();
-        test2.unavailable("source2.csv", "target2.cvs");
+        Analysis test1 = new Analysis();
+        test1.unavailable("data/source1.csv", "data/target1.cvs");
+        Analysis test2 = new Analysis();
+        test2.unavailable("data/source2.csv", "data/target2.cvs");
     }
 }
