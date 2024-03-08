@@ -23,11 +23,10 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file,
                                      BasicFileAttributes attributes) throws IOException {
-        if (Files.isRegularFile(file)) {  // файл является обычным файлом?
-            FileProperty fileProperti = new FileProperty(attributes.size(), file.getFileName().toString()); // создаем объект FileProperty
-            // с указанием размера и имени файла
+        if (Files.isRegularFile(file)) {
+            FileProperty fileProperti = new FileProperty(attributes.size(), file.getFileName().toString());
             if (!map.keySet().contains(fileProperti)) {
-                map.put(fileProperti, new ArrayList<>()); // помещаем в мапу FileProperty и добавляем в лист его абсолютный путь
+                map.put(fileProperti, new ArrayList<>());
                 map.get(fileProperti).add(file.toAbsolutePath());
             } else {
                 map.get(fileProperti).add(file.toAbsolutePath());
