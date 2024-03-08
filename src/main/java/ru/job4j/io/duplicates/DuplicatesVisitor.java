@@ -25,12 +25,8 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
                                      BasicFileAttributes attributes) throws IOException {
         if (Files.isRegularFile(file)) {
             FileProperty fileProperti = new FileProperty(attributes.size(), file.getFileName().toString());
-            if (!map.keySet().contains(fileProperti)) {
-                map.put(fileProperti, new ArrayList<>());
-                map.get(fileProperti).add(file.toAbsolutePath());
-            } else {
-                map.get(fileProperti).add(file.toAbsolutePath());
-            }
+            map.putIfAbsent(fileProperti, new ArrayList<>());
+            map.get(fileProperti).add(file.toAbsolutePath());
         }
         return FileVisitResult.CONTINUE;
     }
