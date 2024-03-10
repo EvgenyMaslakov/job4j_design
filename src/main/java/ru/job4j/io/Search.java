@@ -27,10 +27,10 @@ public class Search {
         if (args.length < 2) {
             throw new IllegalArgumentException("Program arguments are empty or incomplete");
         }
-        if ("С:\'".equals(args[0])) {
+        if (!Files.isDirectory(Paths.get(args[0]))) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
-        if ("js".equals(args[1])) {
+        if (args[1].lastIndexOf(".") != 0) {
             throw new IllegalArgumentException("The file extension is unspecified or incorrect");
         }
     }
