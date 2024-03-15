@@ -4,17 +4,13 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
  * Утилита для архивации папки
- *
  * Техническое задание.
  * 1. При запуске указывается папка, которую мы хотим архивировать, например: c:\project\job4j\
  * 2. В качестве ключа передаётся расширение файлов, которые не нужно включать в архив.
@@ -66,8 +62,25 @@ public class Zip {
         }
     }
 
+    private static void validation(String[] parameters) throws IOException {
+        if (parameters.length < 3) {
+            throw new IllegalArgumentException("Program arguments are empty or incomplete");
+        }
+        if (!Files.isDirectory(Paths.get(parameters[0]))) {
+            throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
+        }
+        if (parameters[1].lastIndexOf(".") != 0) {
+            throw new IllegalArgumentException("The file extension is unspecified or incorrect");
+        }
+        if (!parameters[2].endsWith(".zip")) {
+            throw new IllegalArgumentException("Target file does not have .zip permissions");
+        }
+    }
+
     public static void main(String[] args) throws IOException {
         ArgsName argsName = ArgsName.of(args);
+        String[] parameters = {argsName.get("d"), argsName.get("e"), argsName.get("o")};
+        validation(parameters);
         Zip zip = new Zip();
         zip.packSingleFile(
                 new File("./pom.xml"),
