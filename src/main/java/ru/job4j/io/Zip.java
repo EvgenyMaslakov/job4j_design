@@ -62,25 +62,24 @@ public class Zip {
         }
     }
 
-    private static void validation(String[] parameters) throws IOException {
-        if (parameters.length < 3) {
+    private static void validation(ArgsName argsName) throws IOException {
+        if (argsName.getValues().keySet().size() < 3) {
             throw new IllegalArgumentException("Program arguments are empty or incomplete");
         }
-        if (!Files.isDirectory(Paths.get(parameters[0]))) {
+        if (!Files.isDirectory(Paths.get(argsName.get("d")))) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
-        if (parameters[1].lastIndexOf(".") != 0) {
+        if (argsName.get("e").lastIndexOf(".") != 0) {
             throw new IllegalArgumentException("The file extension is unspecified or incorrect");
         }
-        if (!parameters[2].endsWith(".zip")) {
+        if (!argsName.get("o").endsWith(".zip")) {
             throw new IllegalArgumentException("Target file does not have .zip permissions");
         }
     }
 
     public static void main(String[] args) throws IOException {
         ArgsName argsName = ArgsName.of(args);
-        String[] parameters = {argsName.get("d"), argsName.get("e"), argsName.get("o")};
-        validation(parameters);
+        validation(argsName);
         Zip zip = new Zip();
         zip.packSingleFile(
                 new File("./pom.xml"),

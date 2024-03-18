@@ -1,10 +1,13 @@
 package ru.job4j.io;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ArgsName {
+
+    public Map<String, String> getValues() {
+        return values;
+    }
 
     private final Map<String, String> values = new HashMap<>();
 
