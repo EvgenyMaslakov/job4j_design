@@ -5,10 +5,6 @@ import java.util.Map;
 
 public class ArgsName {
 
-    public Map<String, String> getValues() {
-        return values;
-    }
-
     private final Map<String, String> values = new HashMap<>();
 
     public String get(String key) throws IllegalArgumentException {

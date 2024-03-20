@@ -62,8 +62,8 @@ public class Zip {
         }
     }
 
-    private static void validation(ArgsName argsName) throws IOException {
-        if (argsName.getValues().keySet().size() < 3) {
+    private static void validation(ArgsName argsName, int count) throws IOException {
+        if (count < 3) {
             throw new IllegalArgumentException("Program arguments are empty or incomplete");
         }
         if (!Files.isDirectory(Paths.get(argsName.get("d")))) {
@@ -79,7 +79,7 @@ public class Zip {
 
     public static void main(String[] args) throws IOException {
         ArgsName argsName = ArgsName.of(args);
-        validation(argsName);
+        validation(argsName, args.length);
         Zip zip = new Zip();
         zip.packSingleFile(
                 new File("./pom.xml"),
