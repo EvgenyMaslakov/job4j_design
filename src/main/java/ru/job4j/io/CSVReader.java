@@ -36,7 +36,7 @@ public class CSVReader {
                     }
                 }
             }
-            if (out.equals("stdout")) {
+            if ("stdout".equals(out)) {
                 System.out.print(rsl);
             } else {
                 output.println(rsl);
