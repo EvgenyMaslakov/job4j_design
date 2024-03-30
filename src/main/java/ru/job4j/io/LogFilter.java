@@ -39,7 +39,6 @@ public class LogFilter {
 
     /**
      * Метод должен записывать результат фильтрации в файл
-     * @param log отфильтрованный список строк
      * @param file файл, в который записываем результат фильтрации
      */
     public void saveTo(String file) {
