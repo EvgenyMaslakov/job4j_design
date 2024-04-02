@@ -39,6 +39,9 @@ public class EchoServer {
                         } else if (string.contains("msg=Exit") && count == 0) {
                             cls = true;
                             output.write("Завершить работу сервера.".getBytes());
+                        } else if (string.contains("msg=Bye") && count == 0) {
+                            cls = true;
+                            output.write("Завершить работу сервера.".getBytes());
                         } else if (count == 0) {
                             output.write("What.".getBytes());
                         }
