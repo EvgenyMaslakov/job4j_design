@@ -15,23 +15,38 @@ import java.net.Socket;
  * После чтения отправляем ответ окончательно.
  * Сервер работает, пока его принудительно не закроют.
  * Метод ассеpt принимает один запрос от клиента, чтобы отправить второй, программа должна снова получить объект socket.
+ * msg=Hello > Hello
+ * msg=Exit > Завершить работу сервера.
+ * msg=Any > What.
+ *
  */
 public class EchoServer {
     public static void main(String[] args) throws IOException {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
+                boolean cls = false;
                 Socket socket = server.accept();
                 try (OutputStream output = socket.getOutputStream();
                      BufferedReader input = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
 
                     output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+                    int count = -1;
                     for (String string = input.readLine(); string != null && !string.isEmpty(); string = input.readLine()) {
-                        if (string.contains("msg=Bye")) {
-                            System.out.println("Работа сервера завершена");
-                            break;
+                        count++;
+                        if (string.contains("msg=Hello") && count == 0) {
+                            output.write("Hello.".getBytes());
+                        } else if (string.contains("msg=Exit") && count == 0) {
+                            cls = true;
+                            output.write("Завершить работу сервера.".getBytes());
+                        } else if (count == 0) {
+                            output.write("What.".getBytes());
                         }
                         System.out.println(string);
+                    }
+                    if (cls) {
+                        server.close();
+                        break;
                     }
                     output.flush();
                 }
