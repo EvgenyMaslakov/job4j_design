@@ -13,5 +13,10 @@ public class UsageLog4j {
         LOG.info("info message");
         LOG.warn("warn message");
         LOG.error("error message");
+        String name = "Evgeny Maslakov";
+        int age = 32;
+        LOG.debug("User info name : {}, age : {}", name, age);
+        LOG.debug("byte : {}, short : {}, int : {}, long : {}, float : {}, double : {}, boolean : {}, char : {}",
+                127, 324, 555L, 5.5, 6.6F, 7.7D, true, 'c');
     }
 }
