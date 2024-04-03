@@ -17,6 +17,7 @@ import java.net.Socket;
  * Метод ассеpt принимает один запрос от клиента, чтобы отправить второй, программа должна снова получить объект socket.
  * msg=Hello > Hello
  * msg=Exit > Завершить работу сервера.
+ * msg=Bye > Завершить работу сервера.
  * msg=Any > What.
  *
  */
@@ -29,24 +30,20 @@ public class EchoServer {
                 try (OutputStream output = socket.getOutputStream();
                      BufferedReader input = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
-
                     output.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
-                    int count = -1;
-                    for (String string = input.readLine(); string != null && !string.isEmpty(); string = input.readLine()) {
-                        count++;
-                        if (string.contains("msg=Hello") && count == 0) {
+                        String string = input.readLine();
+                        if (string.contains("msg=Hello")) {
                             output.write("Hello.".getBytes());
-                        } else if (string.contains("msg=Exit") && count == 0) {
+                        } else if (string.contains("msg=Exit")) {
                             cls = true;
                             output.write("Завершить работу сервера.".getBytes());
-                        } else if (string.contains("msg=Bye") && count == 0) {
+                        } else if (string.contains("msg=Bye")) {
                             cls = true;
                             output.write("Завершить работу сервера.".getBytes());
-                        } else if (count == 0) {
+                        } else {
                             output.write("What.".getBytes());
                         }
                         System.out.println(string);
-                    }
                     if (cls) {
                         server.close();
                         break;
