@@ -1,5 +1,7 @@
 package ru.job4j.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,7 +24,10 @@ import java.net.Socket;
  *
  */
 public class EchoServer {
-    public static void main(String[] args) throws IOException {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+
+    public static void main(String[] args) {
         try (ServerSocket server = new ServerSocket(9000)) {
             while (!server.isClosed()) {
                 boolean cls = false;
@@ -51,7 +56,8 @@ public class EchoServer {
                     output.flush();
                 }
             }
+        } catch (Exception e) {
+            LOG.error("IOException in log example", e);
         }
     }
-
 }
