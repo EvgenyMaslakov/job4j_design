@@ -2,8 +2,6 @@ package ru.job4j.io;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 public class ByteArrayStream {
 
@@ -27,11 +25,6 @@ public class ByteArrayStream {
         byte[] bytes2 = "Message".getBytes();
         outStream.writeBytes(bytes2);
         System.out.println(outStream);
-        try (FileOutputStream fileOutput = new FileOutputStream("data/message.txt")) {
-            outStream.writeTo(fileOutput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
 }
