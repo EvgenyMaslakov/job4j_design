@@ -8,7 +8,8 @@ import java.io.StringWriter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Person person = new Person(false, 30, new Contact("11-111"), "Worker", "Married");
+        Person person = new Person(false, 30, new Contact("11-111"),
+                "Worker", "Married");
         /* Получаем контекст для доступа к АПИ */
         JAXBContext context = JAXBContext.newInstance(Person.class);
         /* Создаем сериализатор */
